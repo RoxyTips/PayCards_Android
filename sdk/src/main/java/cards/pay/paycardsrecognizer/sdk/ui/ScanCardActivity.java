@@ -1,17 +1,22 @@
 package cards.pay.paycardsrecognizer.sdk.ui;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.annotation.RestrictTo;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import cards.pay.paycardsrecognizer.sdk.Card;
+import cards.pay.paycardsrecognizer.sdk.R;
 import cards.pay.paycardsrecognizer.sdk.ScanCardIntent;
 import cards.pay.paycardsrecognizer.sdk.camera.RecognitionAvailabilityChecker;
 import cards.pay.paycardsrecognizer.sdk.camera.RecognitionCoreUtils;
@@ -66,6 +71,12 @@ public class ScanCardActivity extends AppCompatActivity implements ScanCardFragm
         ViewCompat.requestApplyInsets(findViewById(android.R.id.content));
     }
 
+    private void showScanFinished() {
+        ImageView iv_wocr_finished = findViewById(R.id.wocr_iv_scan_finished);
+        iv_wocr_finished.setVisibility(View.VISIBLE);
+        iv_wocr_finished.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_check_2));
+    }
+
     @Override
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     public void onScanCardFailed(Exception e) {
@@ -77,6 +88,7 @@ public class ScanCardActivity extends AppCompatActivity implements ScanCardFragm
     @Override
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     public void onScanCardFinished(Card card, @Nullable byte cardImage[]) {
+        showScanFinished();
         Intent intent = new Intent();
         intent.putExtra(ScanCardIntent.RESULT_PAYCARDS_CARD, (Parcelable) card);
         if (cardImage != null) intent.putExtra(ScanCardIntent.RESULT_CARD_IMAGE, cardImage);

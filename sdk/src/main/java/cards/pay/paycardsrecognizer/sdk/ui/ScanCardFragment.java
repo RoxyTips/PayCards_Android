@@ -11,10 +11,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RestrictTo;
 import android.support.v4.app.Fragment;
-import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.text.style.URLSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -265,10 +263,8 @@ public class ScanCardFragment extends Fragment {
             });
         }
 
-        TextView paycardsLink = (TextView)view.findViewById(R.id.wocr_powered_by_paycards_link);
-        SpannableString link = new SpannableString(getText(R.string.wocr_powered_by_pay_cards));
-        link.setSpan(new URLSpan(Constants.PAYCARDS_URL), 0, link.length(), SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
-        paycardsLink.setText(link);
+        TextView paycardsLink = view.findViewById(R.id.wocr_powered_by_paycards_link);
+        paycardsLink.setText(getText(R.string.wocr_hint_position_card_in_frame));
         paycardsLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
